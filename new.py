@@ -53,7 +53,7 @@ submit = st.button("Go FashionGenie 🚀")
 if submit:
     prompt = f"Hey my size is {size} and I'm {gender}. My favourite and preferred color is {color} and I want to wear it for {occasion} and my budget is {budget}. Give me a perfect and simple outfit suggestion based on the prompts I gave! Just give the outfit suggestion like the top and the bottom. That's all!"
     response_gemini = get_gemini_response(prompt)
-    st.subheader("Genie Response 🧞‍♂ is")
+    st.subheader("Genie Response 🧞‍♂")
     st.write(response_gemini)
 
     # Fetch shopping data based on the response
