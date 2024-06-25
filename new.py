@@ -45,7 +45,7 @@ size = st.text_input("Enter Your Size ⭐: ", key="size")
 gender = st.text_input("Enter your Gender ✨:", key="gender")
 color = st.text_input("Enter your Favourite Colour 🎨: ", key="color")
 occasion = st.text_input("Which type of occasion or event would you like to wear 👔?", key="occasion")
-budget = st.text_input("What is your budget?", key="budget")
+budget = st.text_input("What is your budget 💵?", key="budget")
 
 submit = st.button("Go FashionGenie 🚀")
 
