@@ -59,7 +59,7 @@ if submit:
     # Fetch shopping data based on the response
     shopping_data = fetch_shopping_data(response_gemini)
     if shopping_data:
-        refined_prompt = f"Here are some shopping suggestions: {shopping_data}\n\nPlease present these suggestions in a structured manner, separated as individual outfits with shopping links."
+        refined_prompt = f"Here are some shopping suggestions: {shopping_data}\n\nPlease present these suggestions in a structured manner,  separated as individual outfits with hyperlink of its shopping links."
         refined_response = get_gemini_response(refined_prompt)
 
         st.subheader("Shopping Suggestions")
