@@ -1,16 +1,12 @@
-import google.generativeai as genai
 import os
 import streamlit as st
 from dotenv import load_dotenv
 import json
 import requests
+import google.generativeai as genai
 
 # Load environment variables
 load_dotenv()
-
-def to_markdown(text):
-    text = text.replace('•', '  *')
-    return text
 
 # Configure the Google API key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -32,10 +28,9 @@ def fetch_shopping_data(query):
         'Content-Type': 'application/json'
     }
     response = requests.post(url, headers=headers, data=payload)
-    st.write(f"Shopping API Response Status Code: {response.status_code}")
     if response.status_code == 200:
-        st.write(f"Shopping API Response: {response.json()}")
-        return response.json()
+        shopping_data = response.json()  # Parse JSON response
+        return shopping_data
     else:
         st.write(f"Error fetching shopping data: {response.text}")
         return None
@@ -49,31 +44,25 @@ st.header("Gemini Application")
 size = st.text_input("Enter Your Size: ", key="size")
 gender = st.text_input("Enter your Gender:", key="gender")
 color = st.text_input("Enter your Favourite Colour: ", key="color")
-ocassion = st.text_input("Which type of occasion or event would you like to wear?", key="ocassion")
+occasion = st.text_input("Which type of occasion or event would you like to wear?", key="occasion")
 budget = st.text_input("What is your budget?", key="budget")
 
 submit = st.button("Ask the question")
 
 # If ask button is clicked
 if submit:
-    prompt = f"Hey my size is {size} and I'm {gender}. My favourite and preferred color is {color} and I want to wear it for {ocassion} and my budget is {budget}. Give me a perfect and simple outfit suggestion based on the prompts I gave! Just give the outfit suggestion like the top and the bottom. That's all!"
-    response = get_gemini_response(prompt)
+    prompt = f"Hey my size is {size} and I'm {gender}. My favourite and preferred color is {color} and I want to wear it for {occasion} and my budget is {budget}. Give me a perfect and simple outfit suggestion based on the prompts I gave! Just give the outfit suggestion like the top and the bottom. That's all!"
+    response_gemini = get_gemini_response(prompt)
     st.subheader("The Response is")
-    st.write(response)
+    st.write(response_gemini)
 
     # Fetch shopping data based on the response
-    shopping_data = fetch_shopping_data(response)
+    shopping_data = fetch_shopping_data(response_gemini)
     if shopping_data:
-        suggestions = shopping_data.get('items', [])[:3]  # Get first 3 suggestions
-        formatted_suggestions = '\n'.join([
-            f"Title: {item.get('title')}\nPrice: {item.get('price')}\nLink: {item.get('link')}\n"
-            for item in suggestions
-        ])
-
-        refined_prompt = f"Here are some shopping suggestions based on your request:\n{formatted_suggestions}\n\nPlease present these suggestions in a structured manner, separated as individual outfits with proper links."
+        refined_prompt = f"Here are some shopping suggestions: {shopping_data}\n\nPlease present these suggestions in a structured manner, separated as individual outfits with shopping links."
         refined_response = get_gemini_response(refined_prompt)
 
-        st.subheader("Refined Shopping Suggestions")
+        st.subheader("Shopping Suggestions")
         st.write(refined_response)
     else:
         st.write("Could not fetch shopping data at this time.")
