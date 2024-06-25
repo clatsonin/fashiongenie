@@ -36,7 +36,7 @@ def fetch_shopping_data(query):
         return None
 
 # Initialize our Streamlit app
-st.set_page_config(page_title="Q&A Demo")
+st.set_page_config(page_title="Fashion Genie")
 
 st.header("Fashion Genie")
 
@@ -47,7 +47,7 @@ color = st.text_input("Enter your Favourite Colour: ", key="color")
 occasion = st.text_input("Which type of occasion or event would you like to wear?", key="occasion")
 budget = st.text_input("What is your budget?", key="budget")
 
-submit = st.button("Ask the question")
+submit = st.button("Go FashionGenie")
 
 # If ask button is clicked
 if submit:
