@@ -38,7 +38,7 @@ def fetch_shopping_data(query):
 # Initialize our Streamlit app
 st.set_page_config(page_title="Fashion Genie")
 
-st.header("Fashion Genie")
+st.header("Fashion Genie 🧞‍♂")
 
 # User inputs
 size = st.text_input("Enter Your Size: ", key="size")
